@@ -52,6 +52,7 @@ public class Programa {
 			}
 		}
 		Visual.limparTela();
+		
 		Visual.printPartida(partida, capturada);
 	}
 }
