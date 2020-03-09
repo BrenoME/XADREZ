@@ -11,7 +11,6 @@ import xadrez.XadrezPartida;
 import xadrez.XadrezPeca;
 import xadrez.XadrezPosicao;
 
-
 public class Programa {
 
 	public static void main(String[] args) {
