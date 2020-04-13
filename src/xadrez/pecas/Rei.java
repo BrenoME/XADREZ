@@ -98,7 +98,26 @@ public class Rei extends XadrezPeca {
 		
 		//movimento especial
 		if(getcontaMovimento() == 0 && !partida.getCheck()) {
-			
+			Posicao poT1 = new Posicao(posicao.getLinha(), posicao.getColuna()+3);
+			if(testeRook(poT1)) {
+				Posicao p1 = new Posicao(posicao.getLinha(),posicao.getColuna()+1);
+				Posicao p2 = new Posicao(posicao.getLinha(),posicao.getColuna()+2);
+				if(getMesa().peca(p1) == null && getMesa().peca(p2) == null) {
+					aux[posicao.getLinha()][posicao.getColuna() + 2] = true;
+				}
+			}
+		}
+		
+		if(getcontaMovimento() == 0 && !partida.getCheck()) {
+			Posicao poT2 = new Posicao(posicao.getLinha(), posicao.getColuna()-4);
+			if(testeRook(poT2)) {
+				Posicao p1 = new Posicao(posicao.getLinha(),posicao.getColuna()-1);
+				Posicao p2 = new Posicao(posicao.getLinha(),posicao.getColuna()-2);
+				Posicao p3 = new Posicao(posicao.getLinha(),posicao.getColuna()-3);
+				if(getMesa().peca(p1) == null && getMesa().peca(p2) == null && getMesa().peca(p3) == null) {
+					aux[posicao.getLinha()][posicao.getColuna() - 2] = true;
+				}
+			}
 		}
 		
 		return aux;

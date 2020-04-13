@@ -86,7 +86,7 @@ public class XadrezPartida {
 		
 		if(testedeCheck(jogadorAtual)) {
 			desfazerMovimento(Origem, Destino, pecaCapturada);
-			throw new  ExcecaoXadrez("Você não pode se colocar em check");
+			throw new  ExcecaoXadrez("Vocï¿½ nï¿½o pode se colocar em check");
 		}
 		
 		check = (testedeCheck(oponente(jogadorAtual))) ? true : false;
@@ -132,21 +132,21 @@ public class XadrezPartida {
 	
 	private void validarposicaoOrigem(Posicao posicao) {
 		if(!mesa.PecaAqui(posicao)) {
-			throw new ExcecaoXadrez("Não  existe peca na posicao  de origem");
+			throw new ExcecaoXadrez("Nï¿½o  existe peca na posicao  de origem");
 		}
 		
 		if(jogadorAtual != ((XadrezPeca)mesa.peca(posicao)).getCor()) {
-			throw new ExcecaoXadrez("A peça escolhida não é sua");
+			throw new ExcecaoXadrez("A peï¿½a escolhida nï¿½o ï¿½ sua");
 		}
 		
 		if(!mesa.peca(posicao).aquiummovimentoPossivel()) {
-			throw new ExcecaoXadrez("Não há movimentos possíveis para essa peça");
+			throw new ExcecaoXadrez("Nï¿½o hï¿½ movimentos possï¿½veis para essa peï¿½a");
 		}
 	}
 	
 	private void validarposicaoDestino(Posicao origem, Posicao destino) {
 		if(!mesa.peca(origem).movimentosPossiveis(destino)) {
-			throw new ExcecaoXadrez("A peca escolhida não  pode se mover para a posicao de destino");
+			throw new ExcecaoXadrez("A peca escolhida nï¿½o  pode se mover para a posicao de destino");
 		}
 	}
 	
@@ -176,7 +176,7 @@ public class XadrezPartida {
 				return (XadrezPeca)p;
 			}
 		}
-		throw new IllegalStateException("Não existe Rei da cor "+ cor +" no jogo.");
+		throw new IllegalStateException("Nï¿½o existe Rei da cor "+ cor +" no jogo.");
 	}
 	
 	private boolean  testedeCheck(Color cor) {
@@ -230,9 +230,9 @@ public class XadrezPartida {
 		LugarPecaNovo('a',8,new Torre(mesa,Color.BLACK));
 		LugarPecaNovo('h',8,new Torre(mesa,Color.BLACK));
 		//rei//
-		LugarPecaNovo('d',1,new Rei(mesa,Color.WHITE));
+		LugarPecaNovo('d',1,new Rei(mesa,Color.WHITE,this));
 		
-		LugarPecaNovo('d',8,new Rei(mesa,Color.BLACK));
+		LugarPecaNovo('d',8,new Rei(mesa,Color.BLACK,this));
 		//rainha//
 		LugarPecaNovo('e',1,new Rainha(mesa,Color.WHITE));
 		
