@@ -41,7 +41,15 @@ public class Programa {
 				
 				if(pecaCapturada != null) {
 					capturada.add(pecaCapturada);
-				}				
+				}		
+				
+				if(partida.getPromocao() != null) {
+					System.out.print("Digite a peça para a promoção (Q/B/N/R): ");
+					String tipo = sc.nextLine();
+					partida.RealocarPecaPromovida(tipo);
+					
+				}
+				
 			}catch(ExcecaoTabuleiro e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
