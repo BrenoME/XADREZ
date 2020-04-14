@@ -144,6 +144,21 @@ public class XadrezPartida {
 			
 		}
 		
+		if(p instanceof Peao) {
+			if(Origem.getColuna() != Destino.getColuna() && pecaCapturada == null) {
+				Posicao posicaoPeao;
+				if(p.getCor() == Color.WHITE) {
+					posicaoPeao = new Posicao(Destino.getLinha() + 1, Destino.getColuna());
+				}else {
+					posicaoPeao = new Posicao(Destino.getLinha() - 1, Destino.getColuna());
+				}
+				pecaCapturada = mesa.remocaoPeca(posicaoPeao);
+				this.pecaCapturada.add(pecaCapturada);
+				pecasMesa.remove(pecaCapturada);
+			}
+		}
+		
+		
 		return pecaCapturada;
 	}
 	
@@ -175,6 +190,19 @@ public class XadrezPartida {
 			mesa.pecaLugar(rook, origemT);
 			rook.reduzircontagemMovimento();
 			
+		}
+		
+		if(p instanceof Peao) {
+			if(origem.getColuna() != destino.getColuna() && pecaCapturada == enPassantVulnerable) {
+				XadrezPeca peao = (XadrezPeca) mesa.remocaoPeca(destino);
+				Posicao posicaoPeao;
+				if(p.getCor() == Color.WHITE) {
+					posicaoPeao = new Posicao(3, destino.getColuna());
+				}else {
+					posicaoPeao = new Posicao(4, destino.getColuna());
+				}
+				mesa.pecaLugar(peao, posicaoPeao);
+			}
 		}
 		
 	}
@@ -299,23 +327,23 @@ public class XadrezPartida {
 		LugarPecaNovo('b',8,new Cavalo(mesa,Color.BLACK));
 		LugarPecaNovo('g',8,new Cavalo(mesa,Color.BLACK));
 		//peao//
-		LugarPecaNovo('a',2,new Peao(mesa,Color.WHITE));
-		LugarPecaNovo('b',2,new Peao(mesa,Color.WHITE));
-		LugarPecaNovo('c',2,new Peao(mesa,Color.WHITE));
-		LugarPecaNovo('d',2,new Peao(mesa,Color.WHITE));
-		LugarPecaNovo('e',2,new Peao(mesa,Color.WHITE));
-		LugarPecaNovo('f',2,new Peao(mesa,Color.WHITE));
-		LugarPecaNovo('g',2,new Peao(mesa,Color.WHITE));
-		LugarPecaNovo('h',2,new Peao(mesa,Color.WHITE));
+		LugarPecaNovo('a',2,new Peao(mesa,Color.WHITE,this));
+		LugarPecaNovo('b',2,new Peao(mesa,Color.WHITE,this));
+		LugarPecaNovo('c',2,new Peao(mesa,Color.WHITE,this));
+		LugarPecaNovo('d',2,new Peao(mesa,Color.WHITE,this));
+		LugarPecaNovo('e',2,new Peao(mesa,Color.WHITE,this));
+		LugarPecaNovo('f',2,new Peao(mesa,Color.WHITE,this));
+		LugarPecaNovo('g',2,new Peao(mesa,Color.WHITE,this));
+		LugarPecaNovo('h',2,new Peao(mesa,Color.WHITE,this));
 		
-		LugarPecaNovo('a',7,new Peao(mesa,Color.BLACK));
-		LugarPecaNovo('b',7,new Peao(mesa,Color.BLACK));
-		LugarPecaNovo('c',7,new Peao(mesa,Color.BLACK));
-		LugarPecaNovo('d',7,new Peao(mesa,Color.BLACK));
-		LugarPecaNovo('e',7,new Peao(mesa,Color.BLACK));
-		LugarPecaNovo('f',7,new Peao(mesa,Color.BLACK));
-		LugarPecaNovo('g',7,new Peao(mesa,Color.BLACK));
-		LugarPecaNovo('h',7,new Peao(mesa,Color.BLACK));
+		LugarPecaNovo('a',7,new Peao(mesa,Color.BLACK,this));
+		LugarPecaNovo('b',7,new Peao(mesa,Color.BLACK,this));
+		LugarPecaNovo('c',7,new Peao(mesa,Color.BLACK,this));
+		LugarPecaNovo('d',7,new Peao(mesa,Color.BLACK,this));
+		LugarPecaNovo('e',7,new Peao(mesa,Color.BLACK,this));
+		LugarPecaNovo('f',7,new Peao(mesa,Color.BLACK,this));
+		LugarPecaNovo('g',7,new Peao(mesa,Color.BLACK,this));
+		LugarPecaNovo('h',7,new Peao(mesa,Color.BLACK,this));
 	}
 	
 }
