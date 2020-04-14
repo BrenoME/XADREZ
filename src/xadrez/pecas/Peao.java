@@ -2,14 +2,18 @@ package xadrez.pecas;
 
 import xadrez.XadrezPeca;
 import xadrez.Color;
+import xadrez.XadrezPartida;
 import mesa.Mesa;
 import mesa.Posicao;
 
 public class Peao extends XadrezPeca {
 	
+	private XadrezPartida xadrezPartida;
+	
 	//constructor//
-	public Peao(Mesa mesa, Color cor) {
+	public Peao(Mesa mesa, Color cor, XadrezPartida xadrezPartida) {
 		super(mesa, cor);
+		this.xadrezPartida = xadrezPartida;
 	}
 	//toString//
 	@Override
@@ -44,6 +48,18 @@ public class Peao extends XadrezPeca {
 			if(getMesa().ExistenciaPosicao(posi) && pecaOponente(posi)) {
 				aux[posi.getLinha()][posi.getColuna()] =  true;
 			}
+			
+			if(posicao.getLinha() == 3) {
+				Posicao esquerda = new Posicao(posicao.getLinha(), posicao.getColuna() -1);
+				if(getMesa().ExistenciaPosicao(esquerda) && pecaOponente(esquerda) && getMesa().peca(esquerda) == xadrezPartida.getEnPassantVulnerable()) {
+					aux[esquerda.getLinha() -1][esquerda.getColuna()] = true;
+				}
+				Posicao direita = new Posicao(posicao.getLinha(), posicao.getColuna() +1);
+				if(getMesa().ExistenciaPosicao(direita) && pecaOponente(direita) && getMesa().peca(direita) == xadrezPartida.getEnPassantVulnerable()) {
+					aux[direita.getLinha() -1][direita.getColuna()] = true;
+				}
+			}
+			
 		}else{
 			posi.setValores(posicao.getLinha()+1, posicao.getColuna());
 			if(getMesa().ExistenciaPosicao(posi) && !getMesa().PecaAqui(posi)) {
@@ -64,6 +80,17 @@ public class Peao extends XadrezPeca {
 			posi.setValores(posicao.getLinha()+1,posicao.getColuna()+1);
 			if(getMesa().ExistenciaPosicao(posi) && pecaOponente(posi)) {
 				aux[posi.getLinha()][posi.getColuna()] =  true;
+			}
+			
+			if(posicao.getLinha() == 4) {
+				Posicao esquerda = new Posicao(posicao.getLinha(), posicao.getColuna() -1);
+				if(getMesa().ExistenciaPosicao(esquerda) && pecaOponente(esquerda) && getMesa().peca(esquerda) == xadrezPartida.getEnPassantVulnerable()) {
+					aux[esquerda.getLinha() +1][esquerda.getColuna()] = true;
+				}
+				Posicao direita = new Posicao(posicao.getLinha(), posicao.getColuna() +1);
+				if(getMesa().ExistenciaPosicao(direita) && pecaOponente(direita) && getMesa().peca(direita) == xadrezPartida.getEnPassantVulnerable()) {
+					aux[direita.getLinha() +1][direita.getColuna()] = true;
+				}
 			}
 		}
 		

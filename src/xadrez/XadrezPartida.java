@@ -22,6 +22,7 @@ public class XadrezPartida {
 	private Mesa mesa;
 	private boolean check;
 	private boolean checkMate;
+	private XadrezPeca enPassantVulnerable;
 	
 	private List<Peca> pecasMesa = new ArrayList<>();
 	private List<Peca> pecaCapturada = new ArrayList<>();
@@ -55,7 +56,11 @@ public class XadrezPartida {
 	public boolean getCheck() {
 		return check;
 	}
-
+	
+	public XadrezPeca getEnPassantVulnerable() {
+		return enPassantVulnerable;
+	}
+	
 	//metodo//
 	public XadrezPeca[][] getPeca(){
 		XadrezPeca[][] aux = new XadrezPeca[mesa.getLinha()][mesa.getColuna()];
@@ -83,6 +88,7 @@ public class XadrezPartida {
 		validarposicaoDestino(Origem, Destino);
 		
 		Peca pecaCapturada = fazerMovimento(Origem, Destino);
+		XadrezPeca pecaMovida = (XadrezPeca) mesa.peca(Destino);
 		
 		if(testedeCheck(jogadorAtual)) {
 			desfazerMovimento(Origem, Destino, pecaCapturada);
@@ -96,6 +102,13 @@ public class XadrezPartida {
 		}else {
 		proximoTurno();
 		}
+		
+		if(pecaMovida instanceof Peao && (Destino.getLinha() == Origem.getLinha() -2 || Destino.getLinha() == Origem.getLinha() +2)) {
+			enPassantVulnerable = pecaMovida;	
+		}else {
+			enPassantVulnerable = null;
+		}
+		
 		return (XadrezPeca)pecaCapturada;
 	}
 	
@@ -113,6 +126,24 @@ public class XadrezPartida {
 			this.pecaCapturada.add(pecaCapturada);
 		}
 		
+		if(p instanceof Rei && Destino.getColuna() == Origem.getColuna() + 2) {
+			Posicao origemT = new Posicao(Origem.getLinha(), Origem.getColuna() + 3);
+			Posicao destinoT = new Posicao(Origem.getLinha(), Origem.getColuna() + 1);
+			XadrezPeca rook = (XadrezPeca) mesa.remocaoPeca(origemT);
+			mesa.pecaLugar(rook, destinoT);
+			rook.aumentarcontagemMovimento();
+			
+		}
+		
+		if(p instanceof Rei && Destino.getColuna() == Origem.getColuna() - 2) {
+			Posicao origemT = new Posicao(Origem.getLinha(), Origem.getColuna() - 4);
+			Posicao destinoT = new Posicao(Origem.getLinha(), Origem.getColuna() - 1);
+			XadrezPeca rook = (XadrezPeca) mesa.remocaoPeca(origemT);
+			mesa.pecaLugar(rook, destinoT);
+			rook.aumentarcontagemMovimento();
+			
+		}
+		
 		return pecaCapturada;
 	}
 	
@@ -127,7 +158,25 @@ public class XadrezPartida {
 			mesa.pecaLugar(pecaCapturada, destino);
 			this.pecaCapturada.remove(pecaCapturada);
 			pecasMesa.add(pecaCapturada);
-		}	
+		}
+		if(p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
+			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
+			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
+			XadrezPeca rook = (XadrezPeca) mesa.remocaoPeca(destinoT);
+			mesa.pecaLugar(rook, origemT);
+			rook.aumentarcontagemMovimento();
+			
+		}
+		
+		if(p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
+			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
+			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
+			XadrezPeca rook = (XadrezPeca) mesa.remocaoPeca(destinoT);
+			mesa.pecaLugar(rook, origemT);
+			rook.reduzircontagemMovimento();
+			
+		}
+		
 	}
 	
 	private void validarposicaoOrigem(Posicao posicao) {
