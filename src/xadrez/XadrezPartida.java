@@ -1,6 +1,5 @@
 package xadrez;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,7 +106,7 @@ public class XadrezPartida {
 		if(pecaMovida instanceof Peao) {
 			if((pecaMovida.getCor() == Color.WHITE && Destino.getLinha() == 0) || (pecaMovida.getCor() == Color.BLACK && Destino.getLinha() == 7)) {
 				promocao = (XadrezPeca) mesa.peca(Destino);
-				promocao =XadrezPeca RealocarPecaPromovida("Q");
+				promocao = (XadrezPeca) RealocarPecaPromovida("Q");
 			}
 		}
 		
@@ -133,7 +132,7 @@ public class XadrezPartida {
 			throw new IllegalStateException("Não é uma peça para ser promovida");
 		}
 		if(!tipo.equals("B") && !tipo.equals("N") && !tipo.equals("R") && !tipo.equals("Q")) {
-			throw new InvalidParameterException("Tipo inválido para a promoção");		
+			return promocao;		
 		}
 		
 		Posicao pos = promocao.getXadrezPosicao().paraPosicao();
